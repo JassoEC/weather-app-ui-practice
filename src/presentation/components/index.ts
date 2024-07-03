@@ -7,5 +7,9 @@ export * from './ui/icons/Icons';
 export * from './ui/icons/Buttons';
 
 export * from './home/HomeModal';
+export * from './home/TabTitle';
 
 export * from './ui/ButtonWithIcon';
+
+export * from './list/ListCard';
+export * from './list/ListTextInput';

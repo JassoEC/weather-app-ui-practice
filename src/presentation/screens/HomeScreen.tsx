@@ -1,19 +1,24 @@
 import {Image, View, useWindowDimensions} from 'react-native';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {
   DefBoldTitle2,
   DefRegularLargeTitle,
   DefRegularTitle,
   HomeModal,
   SmallMoonCloudFastWind,
+  SmallMoonCloudMidRain,
 } from '../components';
 import {OpacityValue} from '../../config/theme';
 import {LinearGradientAdapter} from '../../config';
 import {ForecastIndicator} from '../components/forecast/ForecastIndicator';
+import {StackParamList} from '../navigation';
 
 interface Props {}
 
 export const HomeScreen = ({}: Props) => {
   const {width, height} = useWindowDimensions();
+
+  const navigation = useNavigation<NavigationProp<StackParamList>>();
 
   return (
     <View
@@ -50,36 +55,36 @@ export const HomeScreen = ({}: Props) => {
           resizeMode="contain"
         />
       </View>
-      <HomeModal>
+      <HomeModal onPress={() => navigation.navigate('List')}>
         <View style={{flex: 1, flexDirection: 'row'}}>
           <ForecastIndicator
-            topText="Now"
+            topText="12 AM"
             bottomText="19º"
             icon={<SmallMoonCloudFastWind />}
           />
           <ForecastIndicator
-            topText="12 AM"
+            topText="Now"
             bottomText="19º"
+            icon={<SmallMoonCloudMidRain />}
             selected
+          />
+          <ForecastIndicator
+            topText="2 AM"
+            bottomText="18º"
             icon={<SmallMoonCloudFastWind />}
           />
           <ForecastIndicator
-            topText="Now"
+            topText="3 AM"
             bottomText="19º"
             icon={<SmallMoonCloudFastWind />}
           />
           <ForecastIndicator
-            topText="12 AM"
+            topText="4 AM"
             bottomText="19º"
-            icon={<SmallMoonCloudFastWind />}
+            icon={<SmallMoonCloudMidRain />}
           />
           <ForecastIndicator
-            topText="Now"
-            bottomText="19º"
-            icon={<SmallMoonCloudFastWind />}
-          />
-          <ForecastIndicator
-            topText="12 AM"
+            topText="6 AM"
             bottomText="19º"
             icon={<SmallMoonCloudFastWind />}
           />

@@ -1,4 +1,4 @@
-import {PropsWithChildren} from 'react';
+import {PropsWithChildren, useState} from 'react';
 import {
   Image,
   Platform,
@@ -10,41 +10,46 @@ import {
 } from 'react-native';
 import {BlurView} from '@react-native-community/blur';
 
-import {DefBoldTitle3} from '../ui/text/default/Bold';
 import {ButtonWithIcon} from '../ui/ButtonWithIcon';
 import {ListIcon, MapIcon, PlusIcon} from '../ui/icons/Icons';
 import {solidColor} from '../../../config/theme';
 import {LinearGradientAdapter} from '../../../config';
+import {TabTitle} from './TabTitle';
 
-interface Props extends PropsWithChildren {}
+interface Props extends PropsWithChildren {
+  onPress?: () => void;
+}
 
-export const HomeModal = ({children}: Props) => {
+type WeatherSelection = 'hourly' | 'weekly';
+
+export const HomeModal = ({children, onPress}: Props) => {
   const {width} = useWindowDimensions();
+  const [selection, setSelection] = useState<WeatherSelection>('hourly');
+
+  const handleChoose = (selected: WeatherSelection) => () => {
+    setSelection(selected);
+  };
+
   return (
     <>
       <View style={[styles.generalDimensions, styles.container]}>
         <LinearGradientAdapter
-          colors={['#2E335A', '#45278B', '#2E335A']}
+          colors={['#2E335A', '#1C1B33']}
           style={[
             styles.generalDimensions,
-            {opacity: Platform.OS === 'ios' ? 0.7 : 0.4},
+            {opacity: Platform.OS === 'ios' ? 0.8 : 0.6},
           ]}
         />
-        <View
-          style={[
-            styles.topTabsContainer,
-            {
-              borderBottomColor: solidColor.quaternary,
-              borderBottomWidth: 0.5,
-            },
-          ]}>
-          <DefBoldTitle3
+        <View style={[styles.topTabsContainer]}>
+          <TabTitle
+            selected={selection === 'hourly'}
             text="Hourly forecast"
-            style={{fontSize: 15, textAlign: 'center'}}
+            onPress={handleChoose('hourly')}
           />
-          <DefBoldTitle3
+          <TabTitle
+            selected={selection === 'weekly'}
             text="Weekly forecast"
-            style={{fontSize: 15, textAlign: 'center'}}
+            onPress={handleChoose('weekly')}
           />
         </View>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -69,6 +74,7 @@ export const HomeModal = ({children}: Props) => {
         />
 
         <ButtonWithIcon
+          onPress={onPress}
           style={{position: 'absolute', bottom: 15, right: 20}}
           icon={<ListIcon style={{width: 45}} />}
         />
@@ -118,16 +124,10 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   topTabsContainer: {
-    width: '100%',
     height: 45,
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    paddingTop: 20,
-    paddingHorizontal: 20,
     opacity: 0.7,
     marginBottom: 15,
-    borderBottomColor: 'white',
   },
   imagesWrapper: {
     width: '100%',

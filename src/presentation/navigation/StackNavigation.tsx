@@ -1,7 +1,12 @@
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {HomeScreen, SearchScreen} from '../screens';
+import {HomeScreen, ListScreen} from '../screens';
+import {createStackNavigator} from '@react-navigation/stack';
 
-const Stack = createNativeStackNavigator();
+export type StackParamList = {
+  Home: undefined;
+  List: undefined;
+};
+
+const Stack = createStackNavigator<StackParamList>();
 
 export const StackNavigation = () => {
   return (
@@ -10,7 +15,7 @@ export const StackNavigation = () => {
         headerShown: false,
       }}>
       <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="Settings" component={SearchScreen} />
+      <Stack.Screen name="List" component={ListScreen} />
     </Stack.Navigator>
   );
 };

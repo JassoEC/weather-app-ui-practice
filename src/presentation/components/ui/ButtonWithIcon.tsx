@@ -3,11 +3,12 @@ import {Pressable, StyleProp, View, ViewStyle} from 'react-native';
 interface Props {
   icon: React.ReactNode;
   style?: StyleProp<ViewStyle>;
+  onPress?: () => void;
 }
 
-export const ButtonWithIcon = ({icon, style}: Props) => {
+export const ButtonWithIcon = ({icon, style, onPress}: Props) => {
   return (
-    <Pressable>
+    <Pressable onPress={onPress}>
       <View
         style={[
           {
